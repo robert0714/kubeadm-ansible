@@ -54,7 +54,7 @@ network: flannel
 After going through the setup, run the `site.yaml` playbook:
 
 ```sh
-$ ansible-playbook site.yaml
+$  ansible-playbook site.yaml -i hosts.ini
 ...
 ==> master1: TASK [addon : Create Kubernetes dashboard deployment] **************************
 ==> master1: changed: [192.16.35.12 -> 192.16.35.12]
