@@ -1,11 +1,11 @@
 Vagrant.require_version ">= 1.7.0"
 
-$os_image = (ENV['OS_IMAGE'] || "ubuntu16").to_sym
+$os_image = (ENV['OS_IMAGE'] || "centos7").to_sym
 
 def set_vbox(vb, config)
   vb.gui = false
   vb.memory = 2048
-  vb.cpus = 1
+  vb.cpus = 2
 
   case $os_image
   when :centos7
@@ -37,7 +37,14 @@ Vagrant.configure("2") do |config|
       private_count += 1
     end
   end
-
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+    config.vbguest.no_install = true 
+    config.vbguest.no_remote = true
+  end
   # Install of dependency packages using script
   config.vm.provision :shell, path: "./hack/setup-vms.sh"
 end

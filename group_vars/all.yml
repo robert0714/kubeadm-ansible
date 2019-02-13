@@ -2,7 +2,7 @@
 # ansible_user: root
 
 # Kubernetes
-kube_version: v1.13.0
+kube_version: v1.13.3
 token: b0f7b8.8d1767876297d85c
 
 # 1.8.x feature: --feature-gates SelfHosting=true
@@ -34,3 +34,11 @@ system_env_dir: /etc/sysconfig
 network_dir: /etc/kubernetes/network
 kubeadmin_config: /etc/kubernetes/admin.conf
 kube_addon_dir: /etc/kubernetes/addon
+
+docker_cfg: docker.cfg
+docker_cfg_dest: /etc/default/docker
+centos_docker_cfg: centos-docker.cfg
+centos_docker_cfg_dest: /lib/systemd/system/docker.service
+
+# centos的{{ ansible_eth1.ipv4.address }}確實可以動態抓到所登入機器的ip ,Ubuntu無法使用，只能用 "{{ facter_ipaddress_eth1 }}"是否能使用
+ip:  "{{ facter_ipaddress_eth1 }}"

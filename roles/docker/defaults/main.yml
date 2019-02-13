@@ -1,3 +1,9 @@
----
+docker_extra: ""
 
-docker_version: 17.03
+centos_files: [
+     # { src: "docker.centos.repo", dest: "/etc/yum.repos.d/docker.repo" },
+     { src: "daemon.json", dest: "/etc/docker/daemon.json" }
+  ]
+  
+centos_docker_cfg: centos-docker.service
+centos_docker_cfg_dest: /lib/systemd/system/docker.service

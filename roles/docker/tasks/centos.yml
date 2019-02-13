@@ -1,0 +1,96 @@
+- name: CentOS dirctory are copied
+  file: path=/etc/docker state=directory mode=0755
+  ignore_errors: yes
+  tags: [docker]
+
+- name: CentOS files are copied
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items: "{{ centos_files }}"
+  tags: [docker]
+
+- name: Install Docker required packages
+  yum: name={{ item }} state=present
+  with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+  tags: [docker]  
+
+- name: add docker ce repo
+  shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    creates: /etc/yum.repos.d/docker-ce.repo
+  register: docker_yum_repo
+  tags: [docker]  
+  
+- name: make yum cache fast
+  shell: yum makecache fast
+  when: docker_yum_repo.changed
+  tags: [docker] 
+
+ 
+- name:  Install validated  Docker  
+  yum:
+    name: "docker-ce-18.06.0.ce-3.el7"
+    state: present
+  tags: [docker]
+
+# - name:  Install validated  Docker  
+#   yum:
+#     name: "docker"
+#     state: present
+#   tags: [docker]
+
+- name: python-pip is present
+  yum:
+    name: python-pip
+    state: present
+  tags: [docker]
+
+- name:  update pip
+  become: true
+  pip:  
+    name: pip
+    state: latest 
+  tags: [docker]
+
+- name: docker-py is present
+  pip:
+    name: docker-py
+    version: 1.10.6
+    state: present
+  tags: [docker]
+
+#- name: CentOS files are present
+#  template:
+#    src: "{{ centos_docker_cfg }}"
+#    dest: "{{ centos_docker_cfg_dest }}"
+#  register: copy_result
+#  tags: [docker]
+
+- name: Centos Daemon is reloaded
+  command: systemctl daemon-reload
+  when: is_systemd is defined
+  tags: [docker]
+
+- name: CentOS service is started
+  service:
+    name: docker
+    state: started
+  tags: [docker]
+
+- name: Enable service docker, and not touch the state
+  service:
+    name: docker
+    enabled: yes
+
+- name: vagrant user is added to the docker group
+  user:
+    name: vagrant
+    group: docker
+    append: yes
+  register: user_result
+  tags: [docker]
+  
