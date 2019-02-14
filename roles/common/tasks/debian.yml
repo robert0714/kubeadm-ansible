@@ -1,0 +1,32 @@
+- name:  set-timezone Asia/Taipei
+  shell: timedatectl set-timezone Asia/Taipei
+  ignore_errors: yes
+  tags:  [common]
+  
+- name:  locale-gen zh_TW
+  shell: sudo locale-gen zh_TW;sudo locale-gen zh_TW.UTF-8 ;sudo dpkg-reconfigure locales;sudo update-locale LANG="zh_TW.UTF-8" LC_ALL="zh_TW.UTF-8" ; 
+  ignore_errors: yes 
+  tags:  [common]
+
+- name:  localedef -f UTF-8 -i zh_TW  zh_TW.UTF-8
+  shell: localedef -f UTF-8 -i zh_TW  zh_TW.UTF-8
+  ignore_errors: yes 
+  tags:  [common]
+
+
+- name: JQ is present
+  apt:
+    name: jq
+    force: yes
+  ignore_errors: yes
+  tags: [common]
+
+
+- name: Services are not running
+  service:
+    name: "{{ item }}"
+    state: stopped
+  ignore_errors: yes
+  with_items: "{{ obsolete_services }}"
+  tags: [common]
+

@@ -1,0 +1,15 @@
+hosts: [
+  { host_ip: "200.200.200.200", host_name: "oracledb"},
+  { host_ip: "200.200.200.201", host_name: "mysqldb"},
+  { host_ip: "200.200.200.202", host_name: "postgrsqldb"},
+  { host_ip: "200.200.200.203", host_name: "mssql"},
+  { host_ip: "200.200.200.204", host_name: "mongodb"}
+]
+
+obsolete_services:
+  - puppet
+  - chef-client
+
+centos_files: [
+     { src: "centos.sshd_config", dest: "/etc/ssh/sshd_config" }
+  ]

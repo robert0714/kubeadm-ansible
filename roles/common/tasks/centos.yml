@@ -1,0 +1,48 @@
+- name:  set-timezone Asia/Taipei
+  shell: timedatectl set-timezone Asia/Taipei
+  ignore_errors: yes
+  tags:  [common]
+
+- name:  Extra Packages for Enterprise Linux (or EPEL) is present
+  yum: 
+     name: epel-release 
+     state: latest  
+  ignore_errors: yes
+  tags: [common]
+
+- name: CentOS files are copied
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items: "{{ centos_files }}"
+  tags: [common]
+
+- name: CentOS Daemon is reloaded
+  command: systemctl daemon-reload
+  tags: [common]
+
+- name: Centos sshd service is restarted
+  service:
+    name: sshd
+    state: restarted
+  tags: [common]
+  
+- name: JQ is present
+  yum: name=jq state=latest  
+  tags: [common]
+
+- name: Host is present
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^{{ item.host_ip }}"
+    line: "{{ item.host_ip }} {{ item.host_name }}"
+  with_items:  "{{ hosts }}"
+  tags: [common]
+
+- name: Services are not running
+  service:
+    name: "{{ item }}"
+    state: stopped
+  ignore_errors: yes
+  with_items:  "{{ obsolete_services }}"
+  tags: [common]
