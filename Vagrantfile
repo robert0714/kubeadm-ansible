@@ -46,5 +46,5 @@ Vagrant.configure("2") do |config|
     config.vbguest.no_remote = true
   end
   # Install of dependency packages using script
-  config.vm.provision :shell, path: "./hack/setup-vms.sh"
+  # config.vm.provision :shell, path: "./hack/setup-vms.sh"
 end

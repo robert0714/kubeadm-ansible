@@ -39,6 +39,14 @@
   with_items:  "{{ hosts }}"
   tags: [common]
 
+- name: sysctl
+  lineinfile:
+    dest: /etc/sysctl.conf
+    regexp: "^{{ item.name }}"
+    line: "{{ item.name }} {{ item.value }}"
+  with_items:  "{{ parameters }}"
+  tags: [common]
+
 - name: Services are not running
   service:
     name: "{{ item }}"

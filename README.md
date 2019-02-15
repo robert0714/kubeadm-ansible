@@ -1,3 +1,14 @@
+# Command Line
+
+```bash
+
+$ cd /vagrant/
+
+$ ./hack/setup-vms.sh
+
+```
+
+
 # Kubeadm Ansible Playbook
 
 Build a Kubernetes cluster using Ansible with kubeadm. The goal is easily install a Kubernetes cluster on machines running:

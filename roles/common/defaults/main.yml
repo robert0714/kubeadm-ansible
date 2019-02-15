@@ -5,6 +5,13 @@ hosts: [
   { host_ip: "200.200.200.203", host_name: "mssql"},
   { host_ip: "200.200.200.204", host_name: "mongodb"}
 ]
+pramaters: [
+  { name: "vm.max_map_count", value: "262144"},
+  { name: "vm.overcommit_memory", value: "1"},
+  { name: "vm.swappiness", value: "0"},
+  { name: "net.core.somaxconn", value: "65535"},
+  { name: "net.ipv4.tcp_max_syn_backlog", value: "65535"}
+]
 
 obsolete_services:
   - puppet
