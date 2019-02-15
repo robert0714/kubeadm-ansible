@@ -5,7 +5,7 @@ hosts: [
   { host_ip: "200.200.200.203", host_name: "mssql"},
   { host_ip: "200.200.200.204", host_name: "mongodb"}
 ]
-pramaters: [
+parameters: [
   { name: "vm.max_map_count", value: "262144"},
   { name: "vm.overcommit_memory", value: "1"},
   { name: "vm.swappiness", value: "0"},
