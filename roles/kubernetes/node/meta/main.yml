@@ -1,4 +1,4 @@
 ---
 dependencies:
   - { role: commons/os-checker }
-  - { role: commons/pre-install , pkgs: ["kubelet", "kubeadm"] }
+  - { role: commons/pre-install , pkgs: ["kubelet-1.13.5", "kubeadm-1.13.5"] }

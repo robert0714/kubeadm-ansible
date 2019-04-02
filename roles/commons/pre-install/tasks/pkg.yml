@@ -28,6 +28,7 @@
   yum:
     name: "{{ pkgs }}"
     update_cache: yes
+    skip_broken: yes
     state: latest
 
 - name: Install kubernetes packages (Debian/Ubuntu)
