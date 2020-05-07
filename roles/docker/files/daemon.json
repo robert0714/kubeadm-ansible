@@ -1,1 +1,13 @@
-{ "insecure-registries":["192.168.57.27:5000","192.168.57.29:5000","10.100.193.200:5000"] ,  "registry-mirror":["192.168.57.27:5001","192.168.57.29:5001","10.100.193.200:5001"] }
+{
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "log-driver": "json-file",
+    "log-opts": {
+      "max-size": "100m"
+    },
+    "storage-driver": "overlay2",
+    "storage-opts": [
+      "overlay2.override_kernel_check=true"
+    ],    
+    "insecure-registries":["192.168.57.27:5000","192.168.57.29:5000","10.100.193.200:5000"] ,  
+    "registry-mirror":["192.168.57.27:5001","192.168.57.29:5001","10.100.193.200:5001"] 
+}
