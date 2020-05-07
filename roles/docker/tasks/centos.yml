@@ -32,8 +32,8 @@
 
  
 - name:  Install validated  Docker  
-  yum:
-    name: "docker-ce-18.06.0.ce-3.el7"
+  yum:      
+    name: "docker-ce-19.03.4-3.el7"
     state: present
   tags: [docker]
 
