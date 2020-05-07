@@ -4,12 +4,15 @@
   shell: "kubeadm reset --force"
   register: reset_cluster
 
+
 - name: Join to Kubernetes cluster
   when: reset_cluster is succeeded
-  shell: |
-    kubeadm join --token {{ token }} \
-                --discovery-token-unsafe-skip-ca-verification \
-                {{ master_ip }}:6443
+  # shell: |
+  #   kubeadm join {{ master_ip }}:6443  \
+  #           --token {{ token }} \
+  #           --discovery-token-unsafe-skip-ca-verification 
+  shell: 
+    " {{ hostvars[groups['master'][0]]['node_join_shell']  }} "
   register: join_cluster
   notify:
     - Recreate kube-dns

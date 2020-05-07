@@ -17,3 +17,19 @@
     state: started
     enabled: yes
   register: started_kubelet
+
+- name: kubeadm token create --print-join-command
+  shell: |
+      kubeadm token create --print-join-command                
+  register: node_join_shell   
+
+- name: display node_join_shell
+  debug:
+    msg:  " {{ node_join_shell.stdout }} "  
+
+- name: Define node_join_shell
+  set_fact:
+    node_join_shell: "{{ node_join_shell.stdout }}"
+
+- name: display global variable
+  debug: msg="{{ hostvars[groups['master'][0]]['node_join_shell']  }}"
