@@ -195,7 +195,7 @@ Calico 3.10 is tested with Kubernetes versions 1.14, 1.15 and 1.16
 
 ```
 $ export POD_CIDR=10.142.0.0/16
-$ curl https://docs.projectcalico.org/v3.10/manifests/calico.yaml -O
+$ curl https://docs.projectcalico.org/v3.14/manifests/calico.yaml -O
 $ sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml
 $ kubectl apply -f calico.yaml
 ```
