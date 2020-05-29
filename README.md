@@ -344,11 +344,11 @@ If you installed helm without secruity, skip to the [next](#Install-Kubernetes-d
 Install step
 
 ```
-$ curl -LOs https://github.com/smallstep/cli/releases/download/v0.10.1/step_0.10.1_linux_amd64.tar.gz
+$ curl -LOs  https://github.com/smallstep/cli/releases/download/v0.14.4/step_linux_0.14.4_amd64.tar.gz
 
-$ tar xvfz step_0.10.1_linux_amd64.tar.gz
+$ tar xvfz step_linux_0.14.4_amd64.tar.gz
 
-$ sudo mv step_0.10.1/bin/step /bin
+$ sudo mv  step_0.14.4/bin/step /bin
 
 $ mkdir -p ~/helm
 $ cd ~/helm
@@ -432,7 +432,7 @@ Check service names for the dashboard
 ```
 $ kubectl get svc -n kube-system
 NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   ---
-dashboard     ClusterIP   10.104.40.19   <none>        ---
+dashboard     ClusterIP   1.4.40.19   <none>        ---
 kube-dns      ClusterIP   10.96.0.10     <none>        ---
 tiller-deploy ClusterIP   10.98.111.98   <none>        ---
 
