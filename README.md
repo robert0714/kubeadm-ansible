@@ -297,12 +297,12 @@ busybox   1/1     Running   0          13s
 
 Starting with Helm 3, the tiller will not be required. We will be using Helm 2.x related charts, so we will not be installing Helm 3.x until charts are migrated to Helm 3.x. 
 
-Since Helm charts that we are going to use still However, we will be installing Helm v2.16.1
+Since Helm charts that we are going to use still However, we will be installing Helm v2.16.7
 
 In principle tiller can be installed using `helm init`.
 
 ```
-$ curl -s https://storage.googleapis.com/kubernetes-helm/helm-v2.16.1-linux-amd64.tar.gz | tar xz
+$ curl -s https://storage.googleapis.com/kubernetes-helm/helm-v2.16.7-linux-amd64.tar.gz | tar xz
 
 $ cd linux-amd64
 $ sudo mv helm /bin
