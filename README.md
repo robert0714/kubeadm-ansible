@@ -444,13 +444,13 @@ tiller-deploy ClusterIP   10.98.111.98   <none>        ---
 
 We will patch the dashboard service from CluserIP to NodePort so that we could run the dashboard using the node IP address.
 
-```
+```ssh
 kubectl -n kube-system patch svc dashboard --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"}]'
 ```
 Traditionally you can edit it .  
 
-```
-$ kubectl -n kube-system edit dashboard
+```ssh
+$ kubectl -n kube-system edit  svc  dashboard
 ```
 You should see `yaml` representation of the service. Change `type: ClusterIP` to `type: NodePort` and save file. If it's already changed go to next step.	Check Kubernetes version
 ```yaml	
