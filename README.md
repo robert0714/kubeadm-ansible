@@ -654,27 +654,17 @@ prometheus-mon-prometheus-0              3/3     Running   1          18s
 
 Check Services
 
-```
+```ssh
 $ kubectl -n monitoring get svc
-NAME                                   TYPE        CLUSTER-IP       EXTERNAL-IP   --- 
-alertmanager-operated                  ClusterIP   None             <none>        --- 
-mon-grafana                            ClusterIP   10.98.241.51     <none>        --- 
-mon-kube-state-metrics                 ClusterIP   10.111.186.181   <none>        --- 
-mon-prometheus-node-exporter           ClusterIP   10.108.189.227   <none>        --- 
-mon-prometheus-operator-alertmanager   ClusterIP   10.106.154.135   <none>        --- 
-mon-prometheus-operator-operator       ClusterIP   10.110.132.10    <none>        --- 
-mon-prometheus-operator-prometheus     ClusterIP   10.106.118.107   <none>        --- 
-prometheus-operated                    ClusterIP   None             <none>        --- 
-
---- PORT(S)             AGE
---- 9093/TCP,6783/TCP   19s
---- 80/TCP              23s
---- 8080/TCP            23s
---- 9100/TCP            23s
---- 9093/TCP            23s
---- 8080/TCP            23s
---- 9090/TCP            23s
---- 9090/TCP            9s
+NAME                                   TYPE        CLUSTER-IP       EXTERNAL-IP   --- PORT(S)             AGE
+alertmanager-operated                  ClusterIP   None             <none>        --- 9093/TCP,6783/TCP   19s
+mon-grafana                            ClusterIP   10.98.241.51     <none>        --- 80/TCP              23s
+mon-kube-state-metrics                 ClusterIP   10.111.186.181   <none>        --- 8080/TCP            23s
+mon-prometheus-node-exporter           ClusterIP   10.108.189.227   <none>        --- 9100/TCP            23s
+mon-prometheus-operator-alertmanager   ClusterIP   10.106.154.135   <none>        --- 9093/TCP            23s
+mon-prometheus-operator-operator       ClusterIP   10.110.132.10    <none>        --- 8080/TCP            23s
+mon-prometheus-operator-prometheus     ClusterIP   10.106.118.107   <none>        --- 9090/TCP            23s
+prometheus-operated                    ClusterIP   None             <none>        --- 9090/TCP            9s
 ```
 
 The grafana UI can be opened using: `http://10.98.241.51` for service `mon-grafana`. The IP address will be different in your case.
