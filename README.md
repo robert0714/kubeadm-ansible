@@ -447,6 +447,45 @@ We will patch the dashboard service from CluserIP to NodePort so that we could r
 ```
 kubectl -n kube-system patch svc dashboard --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"}]'
 ```
+Traditionally you can edit it .  
+
+```
+$ kubectl -n kube-system edit dashboard
+```
+You should see `yaml` representation of the service. Change `type: ClusterIP` to `type: NodePort` and save file. If it's already changed go to next step.	Check Kubernetes version
+```yaml	
+# Please edit the object below. Lines beginning with a '#' will be ignored,	
+# and an empty file will abort the edit. If an error occurs while saving this file will be	
+# reopened with the relevant failures.	
+#	
+apiVersion: v1	
+...	
+  name: kubernetes-dashboard	
+  namespace: kube-system	
+  resourceVersion: "343478"	
+  selfLink: /api/v1/namespaces/kube-system/services/kubernetes-dashboard-head	
+  uid: 8e48f478-993d-11e7-87e0-901b0e532516	
+spec:	
+  clusterIP: 10.100.124.90	
+  externalTrafficPolicy: Cluster	
+  ports:	
+  - port: 443	
+    protocol: TCP	
+    targetPort: 8443	
+  selector:	
+    k8s-app: kubernetes-dashboard	
+  sessionAffinity: None	
+  type: ClusterIP	
+status:	
+  loadBalancer: {}	
+```	
+
+Next we need to check port on which Dashboard was exposed.	
+```sh	
+$ kubectl -n kube-system get service dashboard	
+NAME                   CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE	
+dashboard   1.4.40.19   <nodes>       443:31707/TCP   21h
+```
 
 ### Run Kubernetes dashboard
 
