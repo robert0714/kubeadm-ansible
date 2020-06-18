@@ -408,6 +408,8 @@ $ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 
 # Deploy a Helm Release named "my-release" using the kubernetes-dashboard chart
 $  helm install kubernetes-dashboard/kubernetes-dashboard --name k8web --namespace kube-system --set fullnameOverride="dashboard"
+
+Note: add --tls above if using secure helm
 ```
 
 You can make sure .
