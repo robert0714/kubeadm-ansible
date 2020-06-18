@@ -1,16 +1,36 @@
 ---
 
-- name: Create Kubernetes addon directory
-  file:
-    path: "{{ network_dir }}"
-    state: directory
+#- name: Create Kubernetes addon directory
+#  file:
+#    path: "{{ network_dir }}"
+#    state: directory
+
+#- name: "Copy {{ network }} YAML files"
+#  template:
+#    src: "{{ item }}"
+#    dest: "{{ network_dir }}/{{ item | basename | regex_replace('\\.j2','') }}"
+#  with_fileglob:
+#    - ../templates/{{ network }}*.j2
+
+#- name: "Check {{ network }} daemonset is working"
+#  shell: kubectl --kubeconfig={{ kubeadmin_config }} get ds --all-namespaces | grep {{ network }}
+#  delegate_to: "{{ groups['master'][0] }}"
+#  run_once: true
+#  register: check_net
+#  ignore_errors: true
+#  changed_when: false
+
+#- name: "Create {{ network }} network daemonset"
+#  when: check_net is failed
+#  command: kubectl apply --kubeconfig={{ kubeadmin_config }} -f {{ network_dir }}/
+#  delegate_to: "{{ groups['master'][0] }}"
+#  run_once: true
 
 - name: "Copy {{ network }} YAML files"
-  template:
-    src: "{{ item }}"
-    dest: "{{ network_dir }}/{{ item | basename | regex_replace('\\.j2','') }}"
-  with_fileglob:
-    - ../templates/{{ network }}*.j2
+  shell: |
+      export POD_CIDR={{ pod_network_cidr }} 
+      curl https://docs.projectcalico.org/v3.13/manifests/calico.yaml -O
+      sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml
 
 - name: "Check {{ network }} daemonset is working"
   shell: kubectl --kubeconfig={{ kubeadmin_config }} get ds --all-namespaces | grep {{ network }}
@@ -20,8 +40,12 @@
   ignore_errors: true
   changed_when: false
 
+
 - name: "Create {{ network }} network daemonset"
   when: check_net is failed
-  command: kubectl apply --kubeconfig={{ kubeadmin_config }} -f {{ network_dir }}/
+  command:  sudo -u vagrant kubectl apply -f calico.yaml
   delegate_to: "{{ groups['master'][0] }}"
   run_once: true
+
+
+
