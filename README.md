@@ -399,7 +399,18 @@ $ helm install stable/kubernetes-dashboard --name k8web --namespace kube-system 
 
 Note: add --tls above if using secure helm
 ```
+### Dashboard v2
+1.reference:  
+https://hub.helm.sh/charts/k8s-dashboard/kubernetes-dashboard
+```bash
+# Add kubernetes-dashboard repository
+$ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 
+# Deploy a Helm Release named "my-release" using the kubernetes-dashboard chart
+$  helm install kubernetes-dashboard/kubernetes-dashboard --name k8web --namespace kube-system --set fullnameOverride="dashboard"
+```
+
+You can make sure .
 ```
 $ kubectl get pods -n kube-system
 NAME                                          READY   STATUS    RESTARTS   AGE
