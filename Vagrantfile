@@ -9,7 +9,7 @@ def set_vbox(vb, config)
 
   case $os_image
   when :centos7
-    config.vm.box = "bento/centos-7.7"
+    config.vm.box = "bento/centos-7.8"
   when :ubuntu16
     config.vm.box = "bento/ubuntu-16.04"
   end

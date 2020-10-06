@@ -809,3 +809,60 @@ This is a pretty basic Kubernetes cluster just by using a single VM - which is g
 Click the link below to open the [Asciinema](https://ascinema.org) player to playback the commands that were captured while building the Kubernetes environment.
 
 [![asciicast](https://asciinema.org/a/271731.svg)](https://asciinema.org/a/271731)
+
+
+## Loadbalancer
+GCP,AWS, IBM cloud 一般會提供外部的負載平衡，但此範例處理用keepalived
+### Prepare nodes
+1.確認核心模組是否載。
+
+```
+$ sudo lsmod | grep ^ip_vs
+```
+2.如果步驟1無任何輸出顯示 。
+
+```
+$ sudo ipvsadm -ln
+```
+3.再執行步驟1確認核心模組是否載。
+
+```
+$ sudo lsmod | grep ^ip_vs
+```
+4.增加ip_vs到系統核心模組清單，讓每次重新開機都會自動載入。
+
+```
+$ echo "ip_vs" | sudo tee /etc/modules-load.d/ipvs.conf
+```
+### keepalived installation
+
+####  helm v2  
+
+1. helm v2 to install under k8s1.15- 
+
+```bash
+$  kubectl label node k8s-m1,k8s-n1,k8s-n2  proxy=true
+$  helm repo add kaal https://servicemeshbook.github.io/keepalived
+$  helm repo update
+$  kubectl create clusterrolebinding    keepalived-cluster-role-binding \
+   --clusterrole=cluster-admin --serviceaccount=keepalived:default
+
+$ kubectl create namespace keepalived
+
+$  helm  install kaal/keepalived  --name keepalived\
+   --namespace keepalived \
+   --set keepalivedCloudProvider.serviceIPRange="192.168.35.15/29" \
+   --set nameOverride="lb"
+
+```
+2.  helm v2 to install under k8s1.16+ 
+
+```bash
+$  kubectl label node  k8s-m1,k8s-n1,k8s-n2  proxy=true
+$  git clone https://github.com/robert0714/keepalived.git 
+$  cd keepalived && git  checkout k8s-1.16  && cd ..
+$  helm install keepalived --name keepalived \
+   --namespace keepalived \
+   --set keepalivedCloudProvider.serviceIPRange="192.168.35.15/29" \
+   --set nameOverride="lb"
+```
