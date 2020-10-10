@@ -189,17 +189,30 @@ kube-scheduler-osc01            1/1     Running   0          81s
 
 ## Install Calico network for pods
 
-Choose proper version of Calico [Link](https://docs.projectcalico.org/v3.10/getting-started/kubernetes/requirements)
+Choose proper version of Calico [Link](https://docs.projectcalico.org/archive/v3.12/getting-started/kubernetes/requirements)
 
-Calico 3.10 is tested with Kubernetes versions 1.14, 1.15 and 1.16
+
+To get   kubernetes pod network CIDR
 
 ```
+$ kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
+10.244.0.0/24
+```
+
+Calico 3.12 is tested with Kubernetes versions 1.14, 1.15 and 1.16
+```
 $ export POD_CIDR=10.142.0.0/16
-$ curl https://docs.projectcalico.org/v3.14/manifests/calico.yaml -O
+$ curl https://docs.projectcalico.org/v3.12/manifests/calico.yaml -O
 $ sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml
 $ kubectl apply -f calico.yaml
 ```
-
+or 
+```
+$ export POD_CIDR=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}')
+$ curl https://docs.projectcalico.org/v3.12/manifests/calico.yaml -O
+$ sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml
+$ kubectl apply -f calico.yaml
+```
 It may take a while to pull Calico images over the slow network.
 
 Check docker images being pulled.

@@ -7,3 +7,23 @@ centos_files: [
   
 centos_docker_cfg: centos-docker.service
 centos_docker_cfg_dest: /lib/systemd/system/docker.service
+
+docker_centos_dependencies:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+
+docker_debian_dependencies:
+    # - "linux-image-extra-{{ ubuntu_version.stdout }}"
+    # - linux-image-extra-virtual
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
+
+docker_debian_python_dependencies:
+    - urllib3
+    - pyOpenSSL
+    - ndg-httpsclient
+    - pyasn1

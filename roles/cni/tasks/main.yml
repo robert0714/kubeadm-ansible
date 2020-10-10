@@ -28,24 +28,31 @@
 
 - name: "Copy {{ network }} YAML files"
   shell: |
-      export POD_CIDR={{ pod_network_cidr }} 
-      curl https://docs.projectcalico.org/v3.13/manifests/calico.yaml -O
+      export POD_CIDR=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}')
+      curl https://docs.projectcalico.org/v3.14/manifests/calico.yaml -O
       sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml
+  become: yes
+  become_user: vagrant
 
 - name: "Check {{ network }} daemonset is working"
   shell: kubectl --kubeconfig={{ kubeadmin_config }} get ds --all-namespaces | grep {{ network }}
   delegate_to: "{{ groups['master'][0] }}"
   run_once: true
   register: check_net
+  become: yes
+  become_user: vagrant
   ignore_errors: true
   changed_when: false
 
 
 - name: "Create {{ network }} network daemonset"
   when: check_net is failed
-  command:  sudo -u vagrant kubectl apply -f calico.yaml
+  command:   kubectl apply -f calico.yaml
   delegate_to: "{{ groups['master'][0] }}"
+  become: yes
+  become_user: vagrant
   run_once: true
+
 
 
 
