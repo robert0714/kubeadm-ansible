@@ -864,7 +864,7 @@ $ kubectl create namespace keepalived
 
 $  helm  install kaal/keepalived  --name keepalived\
    --namespace keepalived \
-   --set keepalivedCloudProvider.serviceIPRange="192.168.35.15/29" \
+   --set keepalivedCloudProvider.serviceIPRange="192.16.35.16/29" \
    --set nameOverride="lb"
 
 ```
@@ -876,6 +876,6 @@ $  git clone https://github.com/robert0714/keepalived.git
 $  cd keepalived && git  checkout k8s-1.16  && cd ..
 $  helm install keepalived --name keepalived \
    --namespace keepalived \
-   --set keepalivedCloudProvider.serviceIPRange="192.168.35.15/29" \
+   --set keepalivedCloudProvider.serviceIPRange="192.16.35.16/29" \
    --set nameOverride="lb"
 ```
