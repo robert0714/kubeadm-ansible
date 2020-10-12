@@ -43,13 +43,13 @@
   service:
     name: iscsid
     enabled: yes
-    tags: [common]
+  tags: [common]
 
 - name: CentOS service is started
   service:
       name: iscsid
       state: started
-    tags: [common]
+  tags: [common]
 
 - name: Host is present
   lineinfile:
