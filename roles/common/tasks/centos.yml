@@ -31,6 +31,26 @@
   yum: name=jq state=latest  
   tags: [common]
 
+- name: ipvsadm is present
+  yum: name=ipvsadm state=latest  
+  tags: [common]
+
+- name: iscsi-initiator-utils is present
+  yum: name=iscsi-initiator-utils state=latest  
+  tags: [common]
+
+- name: Enable service iscsid, and not touch the state
+  service:
+    name: iscsid
+    enabled: yes
+    tags: [common]
+
+- name: CentOS service is started
+    service:
+      name: iscsid
+      state: started
+    tags: [common]
+
 - name: Host is present
   lineinfile:
     dest: /etc/hosts
