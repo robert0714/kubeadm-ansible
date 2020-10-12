@@ -46,7 +46,7 @@
     tags: [common]
 
 - name: CentOS service is started
-    service:
+  service:
       name: iscsid
       state: started
     tags: [common]
