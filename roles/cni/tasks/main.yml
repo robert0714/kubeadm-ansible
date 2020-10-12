@@ -29,7 +29,7 @@
 - name: "Copy {{ network }} YAML files"
   shell: |
       export POD_CIDR=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}')
-      curl https://docs.projectcalico.org/v3.14/manifests/calico.yaml -O
+      curl https://docs.projectcalico.org/v3.13/manifests/calico.yaml -O
       sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml
   become: yes
   become_user: vagrant
