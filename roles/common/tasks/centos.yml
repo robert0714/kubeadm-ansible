@@ -35,6 +35,15 @@
   yum: name=ipvsadm state=latest  
   tags: [common]
 
+- name:  Make sure that the ip_vs kernel module is loaded
+  shell:  |
+    ipvsadm -ln
+    echo "ip_vs" | sudo tee /etc/modules-load.d/ipvs.conf
+  ignore_errors: yes
+  become: yes
+  become_method: sudo
+  tags:  [common]
+
 - name: iscsi-initiator-utils is present
   yum: name=iscsi-initiator-utils state=latest  
   tags: [common]

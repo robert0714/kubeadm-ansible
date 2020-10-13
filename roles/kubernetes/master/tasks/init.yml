@@ -41,3 +41,10 @@
   retries: 5
   delay: 2
   ignore_errors: true
+
+- name: "Create an admin account"
+  shell: |
+      kubectl --namespace kube-system create serviceaccount admin
+      kubectl create clusterrolebinding admin --serviceaccount=kube-system:admin --clusterrole=cluster-admin
+  become: yes
+  become_user: vagrant 

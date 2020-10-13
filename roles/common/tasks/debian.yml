@@ -21,6 +21,36 @@
   ignore_errors: yes
   tags: [common]
 
+- name: ipvsadm is present
+  apt:
+    name: ipvsadm
+    state: latest 
+  tags: [common]
+
+- name:  Make sure that the ip_vs kernel module is loaded
+  shell: ipvsadm  -ln
+  ignore_errors: yes
+  become: yes
+  become_method: sudo
+  tags:  [common]
+
+- name: open-iscsi is present
+  apt:
+    name: open-iscsi
+    state: latest   
+  tags: [common]
+
+- name: Enable service open-iscsi, and not touch the state
+  service:
+    name: open-iscsi
+    enabled: yes
+  tags: [common]
+
+- name: open-iscsi service is started
+  service:
+      name: open-iscsi
+      state: started
+  tags: [common] 
 
 - name: Services are not running
   service:

@@ -17,6 +17,7 @@
   roles:
     - { role: kubernetes/master, tags: master }
     - { role: cni, tags: cni }
+    - { role: helm, tags: helm }
 
 - hosts: node
   gather_facts: yes
